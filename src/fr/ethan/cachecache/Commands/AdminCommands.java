@@ -22,7 +22,7 @@ public class AdminCommands implements CommandExecutor {
                     // paramètres : name , limite, (time || autotime)
                     boolean a = false;
                     if (sender instanceof Player == true) {
-                        if(args.length <= 3) { sender.sendMessage("Bonne utilisation : /acc setgame <nom> <durée> <limites> <auto(y)>"); return true; }
+                        if(args.length <= 3) { sender.sendMessage("Bonne utilisation : /acc setgame <nom> <limites> <durée ou auto(y)>"); return true; }
                         if(args[3].equals("y")) {
                             a = true;
                             GameConfig.setGame(args[1], args[2], "0", Bukkit.getPlayerExact(sender.getName()).getLocation(),a);
