@@ -34,9 +34,11 @@ public class UserCommands implements CommandExecutor {
                             }
                         }
                         else {sender.sendMessage(ChatColor.RED + "Erreur, trop d'arguments : /cc start <name>"); return true;}
+
                         if(CacheCache.gameQueue.size() == GameConfig.listGame().length) {
                             sender.sendMessage(ChatColor.RED + "Erreur, il n'y a pas de partie disponible.");
-                        } else {
+                        }
+                        else {
                             GameCycle game = new GameCycle(name);
                             CacheCache.gameQueue.put(game.getName(),game);
                             game.runTaskTimer(plugin,0,20);

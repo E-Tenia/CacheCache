@@ -2,6 +2,7 @@ package fr.ethan.cachecache.GameElements;
 
 import fr.ethan.cachecache.Mains.CacheCache;
 
+import fr.ethan.cachecache.Utils.Broadcast;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -19,6 +20,7 @@ import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.ArrayList;
 
@@ -72,6 +74,9 @@ public class EventManager implements Listener {
     	if(player.getFoodLevel() == 20 /*&& joueur est en jeu*/) {
     		event.setCancelled(true);
     	}
+    	else{
+    	    player.setFoodLevel(20);
+        }
     }
 
     @EventHandler
@@ -145,5 +150,24 @@ public class EventManager implements Listener {
     @EventHandler
     public void onRespawn(EntityResurrectEvent event) {
     	
+    }
+    //GESTION DES DECONNEXIONS
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event){
+        Player player = event.getPlayer();
+        if(seekers.hasMember(player)){
+            seekers.remove(player);
+            if(seekers.isEmpty()){
+                cancel = true;
+                Broadcast.broadcaster(ChatColor.RED+"La partie a été annulée car il n'y a plus assez de joeurs");
+            }
+        }
+        else if(hiders.hasMember(player)){
+            hiders.remove(player);
+            if(hiders.isEmpty()){
+                cancel = true;
+                Broadcast.broadcaster(ChatColor.RED+"La partie a été annulée car il n'y a plus assez de joeurs");
+            }
+        }
     }
 }
